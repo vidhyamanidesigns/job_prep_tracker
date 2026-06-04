@@ -121,6 +121,36 @@
   .empty-apps { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.9rem; }
   .notes-cell { max-width: 180px; color: var(--muted); font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+  /* DAY NOTES */
+  .day-note-wrap { margin-top: 10px; display: none; }
+  .day-card.done .day-note-wrap { display: block; }
+  .day-note-wrap textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 8px 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 11.5px; line-height: 1.5;
+    resize: vertical; min-height: 58px; outline: none; transition: border-color 0.2s;
+  }
+  .day-note-wrap textarea:focus { border-color: var(--accent); }
+  .note-save-btn {
+    margin-top: 5px; background: none; border: 1px solid var(--border);
+    color: var(--muted); padding: 3px 12px; border-radius: 6px;
+    font-size: 10.5px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
+  }
+  .note-save-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .note-saved-flash { font-size: 10px; color: #6ee7b7; margin-left: 8px; opacity: 0; transition: opacity 0.3s; }
+
+  /* NOTES LOG TAB */
+  .notes-log-section { max-width: 1100px; margin: 2rem auto 4rem; padding: 0 2rem; }
+  .notes-log-header { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .notes-log-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 2rem; }
+  .notes-empty { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.9rem; }
+  .note-entry { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+  .note-entry-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .note-entry-day { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+  .note-entry-topic { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+  .note-entry-tag { font-size: 10px; padding: 2px 8px; border-radius: 100px; }
+  .note-entry-body { font-size: 0.85rem; color: var(--muted); line-height: 1.6; white-space: pre-wrap; }
+
   /* NOTICE / MILESTONE CARD */
   .milestone-strip { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 2rem; }
   .milestones { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -193,6 +223,7 @@
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('prep', this)">Prep Plan</button>
   <button class="tab-btn" onclick="switchTab('apps', this)">Applications</button>
+  <button class="tab-btn" onclick="switchTab('notes', this)">My Notes</button>
 </div>
 
 <!-- PREP TAB -->
@@ -242,6 +273,15 @@
     </div>
 
     <div id="apps-list"></div>
+  </div>
+</div>
+
+<!-- NOTES TAB -->
+<div id="tab-notes" class="tab-content">
+  <div class="notes-log-section">
+    <div class="notes-log-header">My Notes</div>
+    <div class="notes-log-sub">Everything you've written after completing a day — your personal learning log.</div>
+    <div id="notes-log-list"></div>
   </div>
 </div>
 
@@ -379,8 +419,10 @@ const TAG_COLORS = {
 
 const STORAGE_KEY = "vid_ux_prep_done_v2";
 const APP_KEY = "vid_ux_apps";
+const NOTES_KEY = "vid_ux_day_notes";
 let done = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
 let apps = JSON.parse(localStorage.getItem(APP_KEY) || "[]");
+let dayNotes = JSON.parse(localStorage.getItem(NOTES_KEY) || "{}");
 let currentFilter = "all";
 const total = MONTHS.reduce((a, m) => a + m.days.length, 0);
 
@@ -392,7 +434,23 @@ function getCalDate(dayIndex) {
 
 function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify([...done])); }
 function saveApps() { localStorage.setItem(APP_KEY, JSON.stringify(apps)); }
-function toggle(id) { if (done.has(id)) done.delete(id); else done.add(id); save(); updateProgress(); render(); }
+function saveNotes() { localStorage.setItem(NOTES_KEY, JSON.stringify(dayNotes)); }
+
+function toggle(id) {
+  if (done.has(id)) done.delete(id);
+  else done.add(id);
+  save(); updateProgress(); render();
+}
+
+function saveNote(gd) {
+  const ta = document.getElementById("note-ta-" + gd);
+  if (!ta) return;
+  dayNotes[gd] = ta.value;
+  saveNotes();
+  const flash = document.getElementById("note-flash-" + gd);
+  if (flash) { flash.style.opacity = "1"; setTimeout(() => flash.style.opacity = "0", 1500); }
+  if (document.getElementById("tab-notes").classList.contains("active")) renderNotesLog();
+}
 
 function updateProgress() {
   const pct = Math.round((done.size / total) * 100);
@@ -400,8 +458,7 @@ function updateProgress() {
   document.getElementById("pct-display").innerHTML = pct + '<span>%</span>';
   document.getElementById("days-done-display").textContent = done.size + " of " + total + " days done";
   document.getElementById("remaining-display").textContent = (total - done.size) + " days remaining";
-  let streak = 0;
-  let gd = 0;
+  let streak = 0, gd = 0;
   outer: for (const m of MONTHS) { for (let i = 0; i < m.days.length; i++) { gd++; if (done.has(gd)) streak++; else break outer; } }
   document.getElementById("streak-display").textContent = "streak: " + streak + " day" + (streak !== 1 ? "s" : "");
 }
@@ -412,9 +469,8 @@ function render() {
   let globalDay = 0;
   MONTHS.forEach(month => {
     let monthDone = 0;
-    const monthTotal = month.days.length;
     const cards = [];
-    month.days.forEach((day, di) => {
+    month.days.forEach((day) => {
       globalDay++;
       const gd = globalDay;
       const isDone = done.has(gd);
@@ -432,7 +488,7 @@ function render() {
       <span class="month-name">${month.name}</span>
       <span class="phase-badge ${month.badge}">${month.theme}</span>
       <span class="month-dates">${month.dateRange}</span>
-      <span class="month-progress">${monthDone}/${monthTotal}</span>
+      <span class="month-progress">${monthDone}/${month.days.length}</span>
     </div><div class="days-grid" id="grid-${month.name}"></div>`;
     container.appendChild(block);
     const grid = document.getElementById("grid-" + month.name);
@@ -441,17 +497,58 @@ function render() {
       const c = document.createElement("div");
       c.className = "day-card" + (isDone ? " done" : "") + (isRest ? " rest-day" : "") + (isApply ? " apply-card" : "");
       const applyPip = isApply ? `<span style="font-size:9px;color:#6ee7b7;margin-left:6px;letter-spacing:0.03em">▸ apply day</span>` : "";
-      c.innerHTML = `<div class="checkbox">${isDone ? "✓" : ""}</div>
+      const existingNote = dayNotes[gd] || "";
+      c.innerHTML = `<div class="checkbox" id="chk-${gd}">${isDone ? "✓" : ""}</div>
         <div class="day-content">
           <div class="day-num">DAY ${gd} · ${getCalDate(gd-1)}${applyPip}</div>
           <div class="day-topic">${day[0]}</div>
           <div class="day-sub">${day[1]}</div>
           <span class="day-tag" style="background:${tc.bg};color:${tc.color}">${day[2]}</span>
+          <div class="day-note-wrap">
+            <textarea id="note-ta-${gd}" placeholder="What did you learn? What clicked? What was hard?">${existingNote}</textarea>
+            <div style="display:flex;align-items:center">
+              <button class="note-save-btn" onclick="event.stopPropagation();saveNote(${gd})">Save note</button>
+              <span class="note-saved-flash" id="note-flash-${gd}">✓ saved</span>
+            </div>
+          </div>
         </div>`;
-      c.onclick = () => toggle(gd);
+      // clicking the card toggles done — but clicking inside textarea or button shouldn't
+      c.onclick = (e) => {
+        if (e.target.tagName === "TEXTAREA" || e.target.tagName === "BUTTON") return;
+        toggle(gd);
+      };
       grid.appendChild(c);
     });
   });
+}
+
+function renderNotesLog() {
+  const container = document.getElementById("notes-log-list");
+  // build a flat list of all days that have notes
+  const entries = [];
+  let gd = 0;
+  MONTHS.forEach(month => {
+    month.days.forEach(day => {
+      gd++;
+      if (dayNotes[gd] && dayNotes[gd].trim()) {
+        entries.push({ gd, day, month: month.name });
+      }
+    });
+  });
+  if (entries.length === 0) {
+    container.innerHTML = '<div class="notes-empty">No notes yet da — complete a day and write what you learned 📝</div>';
+    return;
+  }
+  const tc = (tag) => TAG_COLORS[tag] || TAG_COLORS["Rest"];
+  container.innerHTML = entries.map(({ gd, day, month }) => `
+    <div class="note-entry">
+      <div class="note-entry-header">
+        <span class="note-entry-day">DAY ${gd} · ${getCalDate(gd-1)} · ${month}</span>
+        <span class="note-entry-topic">${day[0]}</span>
+        <span class="note-entry-tag" style="background:${tc(day[2]).bg};color:${tc(day[2]).color}">${day[2]}</span>
+      </div>
+      <div class="note-entry-body">${dayNotes[gd].trim()}</div>
+    </div>`).join("");
 }
 
 function filterMonth(month, btn) {
@@ -467,6 +564,7 @@ function switchTab(tab, btn) {
   btn.classList.add("active");
   document.getElementById("tab-" + tab).classList.add("active");
   if (tab === "apps") renderApps();
+  if (tab === "notes") renderNotesLog();
 }
 
 // APPLICATION TRACKER
