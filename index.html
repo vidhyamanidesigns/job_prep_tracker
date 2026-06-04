@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vid's UX Job Prep Tracker</title>
+<title>Vid's UX Job Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0e0e0f; --surface: #161617; --card: #1c1c1e; --border: #2a2a2d;
     --text: #f0ede8; --muted: #7a7a80; --accent: #e8c547;
     --progress-bg: #2a2a2d;
+    --apply-accent: #6ee7b7;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
@@ -30,7 +31,18 @@
   .big-number span { font-size: 1.2rem; color: var(--muted); }
   .days-left { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
 
-  .progress-section { max-width: 1100px; margin: 2rem auto 0; padding: 0 2rem; }
+  /* TIMELINE OVERVIEW */
+  .timeline-bar { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 2rem; }
+  .timeline-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .timeline-track { display: grid; grid-template-columns: 27fr 31fr 31fr 19fr; gap: 3px; border-radius: 8px; overflow: hidden; height: 32px; }
+  .t-seg { display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+  .t-prep   { background: rgba(232,197,71,0.2);  color: var(--accent); }
+  .t-par    { background: rgba(110,231,183,0.15); color: var(--apply-accent); }
+  .t-apply  { background: rgba(96,165,250,0.15);  color: #60a5fa; }
+  .t-land   { background: rgba(244,114,182,0.15); color: #f472b6; }
+  .timeline-dates { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--muted); font-family: 'DM Mono', monospace; margin-top: 6px; }
+
+  .progress-section { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 2rem; }
   .progress-bar-outer { background: var(--progress-bg); border-radius: 100px; height: 8px; overflow: hidden; margin-bottom: 0.75rem; }
   .progress-bar-inner { height: 100%; background: linear-gradient(90deg, var(--accent), #f4a261); border-radius: 100px; transition: width 0.4s ease; }
   .progress-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--muted); font-family: 'DM Mono', monospace; }
@@ -39,13 +51,20 @@
   .leg { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); }
   .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
+  /* PHASE BADGE */
+  .phase-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 100px; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; vertical-align: middle; margin-left: 6px; }
+  .badge-prep   { background: rgba(232,197,71,0.15);  color: var(--accent); }
+  .badge-hybrid { background: rgba(110,231,183,0.12); color: var(--apply-accent); }
+  .badge-apply  { background: rgba(96,165,250,0.12);  color: #60a5fa; }
+  .badge-land   { background: rgba(244,114,182,0.12); color: #f472b6; }
+
   .filters { max-width: 1100px; margin: 2rem auto 0; padding: 0 2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
   .filter-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 6px 16px; border-radius: 100px; font-size: 0.82rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
   .filter-btn:hover, .filter-btn.active { border-color: var(--accent); color: var(--accent); }
 
   main { max-width: 1100px; margin: 2rem auto 4rem; padding: 0 2rem; }
   .month-block { margin-bottom: 3rem; }
-  .month-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+  .month-header { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
   .month-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; }
   .month-theme { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
   .month-dates { font-size: 0.78rem; color: var(--muted); font-family: 'DM Mono', monospace; }
@@ -56,6 +75,8 @@
   .day-card:hover { border-color: #3a3a40; transform: translateY(-1px); }
   .day-card.done { background: #141416; border-color: var(--border); opacity: 0.55; }
   .day-card.rest-day { border-style: dashed; }
+  /* applying-overlap card gets a subtle green left border */
+  .day-card.apply-card { border-left: 2px solid rgba(110,231,183,0.3); }
   .checkbox { width: 20px; height: 20px; border: 1.5px solid var(--border); border-radius: 6px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 12px; color: transparent; }
   .day-card.done .checkbox { background: var(--accent); border-color: var(--accent); color: #0e0e0f; }
   .day-content { flex: 1; min-width: 0; }
@@ -100,10 +121,18 @@
   .empty-apps { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.9rem; }
   .notes-cell { max-width: 180px; color: var(--muted); font-size: 0.8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+  /* NOTICE / MILESTONE CARD */
+  .milestone-strip { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 2rem; }
+  .milestones { display: flex; gap: 10px; flex-wrap: wrap; }
+  .m-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; flex: 1; min-width: 160px; }
+  .m-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .m-date  { font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--text); }
+  .m-note  { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
+
   footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border); letter-spacing: 0.05em; }
   footer strong { color: var(--accent); font-weight: 500; }
   ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  @media (max-width: 600px) { header, .progress-section, .legend, .filters, main, .app-section { padding-left: 1.25rem; padding-right: 1.25rem; } .days-grid { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr; } .apps-table { font-size: 0.78rem; } }
+  @media (max-width: 600px) { header, .progress-section, .legend, .filters, main, .app-section, .timeline-bar, .milestone-strip { padding-left: 1.25rem; padding-right: 1.25rem; } .days-grid { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr; } .apps-table { font-size: 0.78rem; } .timeline-track { height: 26px; } .t-seg { font-size: 0.6rem; } }
 </style>
 </head>
 <body>
@@ -118,6 +147,30 @@
     <div class="days-left" id="days-done-display">0 of 108 days done</div>
   </div>
 </header>
+
+<!-- TIMELINE VISUAL -->
+<div class="timeline-bar">
+  <div class="timeline-label">Your roadmap at a glance</div>
+  <div class="timeline-track">
+    <div class="t-seg t-prep">Prep · Jun</div>
+    <div class="t-seg t-par">Prep + Apply · Jul</div>
+    <div class="t-seg t-apply">Heavy Apply · Aug</div>
+    <div class="t-seg t-land">Land It · Sep</div>
+  </div>
+  <div class="timeline-dates">
+    <span>Jun 4</span><span>Jul 1</span><span>Aug 1</span><span>Sep 1</span><span>Sep 19</span>
+  </div>
+</div>
+
+<!-- MILESTONES -->
+<div class="milestone-strip">
+  <div class="milestones">
+    <div class="m-card"><div class="m-label">Resign / Paper</div><div class="m-date">~Jul 2026</div><div class="m-note">Start notice period</div></div>
+    <div class="m-card"><div class="m-label">Notice Ends</div><div class="m-date">~Oct 2026</div><div class="m-note">3 months notice</div></div>
+    <div class="m-card"><div class="m-label">🎯 Land Offer</div><div class="m-date">By Sep 19</div><div class="m-note">So you can negotiate start date</div></div>
+    <div class="m-card"><div class="m-label">Apps Target</div><div class="m-date">30+ roles</div><div class="m-note">Jul → Sep, 5–8 / week</div></div>
+  </div>
+</div>
 
 <div class="progress-section">
   <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar" style="width:0%"></div></div>
@@ -134,6 +187,7 @@
   <div class="leg"><div class="leg-dot" style="background:#60a5fa"></div>Job hunting</div>
   <div class="leg"><div class="leg-dot" style="background:#f472b6"></div>Mock practice</div>
   <div class="leg"><div class="leg-dot" style="background:#4b5563"></div>Rest</div>
+  <div class="leg"><div class="leg-dot" style="background:#6ee7b7;border:1px solid #6ee7b7"></div>▸ Parallel applying day</div>
 </div>
 
 <div class="tab-bar">
@@ -145,10 +199,10 @@
 <div id="tab-prep" class="tab-content active">
   <div class="filters">
     <button class="filter-btn active" onclick="filterMonth('all', this)">All phases</button>
-    <button class="filter-btn" onclick="filterMonth('Phase 1', this)">Phase 1</button>
-    <button class="filter-btn" onclick="filterMonth('Phase 2', this)">Phase 2</button>
-    <button class="filter-btn" onclick="filterMonth('Phase 3', this)">Phase 3</button>
-    <button class="filter-btn" onclick="filterMonth('Phase 4', this)">Phase 4</button>
+    <button class="filter-btn" onclick="filterMonth('June', this)">June — Prep</button>
+    <button class="filter-btn" onclick="filterMonth('July', this)">July — Prep + Apply</button>
+    <button class="filter-btn" onclick="filterMonth('August', this)">August — Apply</button>
+    <button class="filter-btn" onclick="filterMonth('September', this)">September — Land It</button>
     <button class="filter-btn" onclick="filterMonth('undone', this)">Remaining only</button>
   </div>
   <main id="main-content"></main>
@@ -191,18 +245,19 @@
   </div>
 </div>
 
-<footer>Built for <strong>Vid</strong> · From Systems to Stories · September 2026 🎯</footer>
+<footer>Built for <strong>Vid</strong> · From Systems to Stories · Land by September 2026 🎯</footer>
 
 <script>
+// isApply flag = true means this day also includes a "apply X roles" push in parallel
 const MONTHS = [
-  { name: "Phase 1", theme: "Foundation", dateRange: "Jun 4 – Jul 1", days: [
+  { name: "June", theme: "Core Prep", dateRange: "Jun 4 – Jun 30", badge: "badge-prep", days: [
     ["Your origin story","Draft 'Tell me about yourself'","Interview Q&A"],
     ["The non-traditional angle","Own your sysadmin → designer path","Portfolio"],
     ["STAR format basics","Situation-Task-Action-Result method","Interview Q&A"],
     ["Zoom case study walkthrough","Present it out loud — timed","Mock practice"],
     ["Portfolio audit","List what's strong, what needs work","Portfolio"],
     ["UX vocabulary","Discovery, synthesis, ideation, validation","Design skills"],
-    ["REST DAY","Review week 1, note what felt hard","Rest"],
+    ["REST DAY","Review week 1 — note what felt hard","Rest"],
     ["Behavioral Q: 'Tell me a challenge'","Write + practice STAR answer","Interview Q&A"],
     ["Behavioral Q: 'Why design?'","Your transition story — make it compelling","Interview Q&A"],
     ["Heuristic evaluation","Nielsen's 10 heuristics — apply to any app","Design skills"],
@@ -222,94 +277,94 @@ const MONTHS = [
     ["Wireframing speed drill","Low-fi wireframe an app in 30 mins","Design skills"],
     ["LinkedIn audit","Headline, about, featured projects","Job hunting"],
     ["Resume polish","UX-first reframe of your experience","Job hunting"],
-    ["Phase 1 wrap-up","Review all STAR answers, identify gaps","Mock practice"],
+    ["June wrap-up","Review all STAR answers, identify gaps","Mock practice"],
   ]},
-  { name: "Phase 2", theme: "Interview Mechanics", dateRange: "Jul 2 – Jul 29", days: [
+  { name: "July", theme: "Prep + Start Applying", dateRange: "Jul 1 – Jul 31", badge: "badge-hybrid", days: [
     ["Design challenge intro","What to expect, how to structure answers","Design skills"],
     ["Live design challenge","Redesign a broken checkout flow — 30 mins","Mock practice"],
     ["Challenge debrief","What worked, what you'd do differently","Mock practice"],
-    ["Whiteboard challenge","Design an onboarding flow from scratch","Design skills"],
+    ["Job boards setup","LinkedIn, Wellfound, Cutshort, Naukri — set alerts","Job hunting", true],
     ["Metrics in UX","HEART framework — talk about success","Interview Q&A"],
     ["Behavioral Q bank","Write 5 new STAR answers","Interview Q&A"],
     ["REST DAY","Record yourself presenting case studies","Rest"],
-    ["Portfolio Q&A deep dive","Articulate your design decisions","Portfolio"],
+    ["Portfolio Q&A deep dive","Articulate every design decision","Portfolio"],
     ["Portfolio website review","Mobile test, all links, transitions","Portfolio"],
     ["Design systems vocabulary","Tokens, components, variants — speak fluently","Design skills"],
     ["Accessibility basics","WCAG, contrast, keyboard nav","Design skills"],
-    ["Behavioral Q: 'How you prioritize'","STAR using real NextLeap example","Interview Q&A"],
+    ["First applications batch","Apply to 5 roles — tailored cover + resume","Job hunting", true],
     ["Live challenge: fintech","Design a fintech app feature","Mock practice"],
     ["REST DAY","Full portfolio read — fresh eyes","Rest"],
-    ["Competitor analysis","Compare 2 apps in the same space","Design skills"],
+    ["Cold outreach templates","Write 2 personalised reach-out messages","Job hunting", true],
     ["Behavioral Q: 'Cross-functional work'","Show you can work with eng/PMs","Interview Q&A"],
     ["Figma skills audit","Auto-layout, components, variables — gaps?","Design skills"],
     ["Figma gap filling","Practice whichever skill felt weakest","Design skills"],
-    ["Questions to ask interviewers","Build a list of 10 smart questions","Interview Q&A"],
+    ["Apply to 5 more roles","Track everything in the Applications tab","Job hunting", true],
     ["Research synthesis","Affinity mapping, insights extraction","Design skills"],
     ["REST DAY","Timed 10-min mock portfolio presentation","Rest"],
-    ["Job search strategy","Startups vs product companies","Job hunting"],
-    ["Job boards setup","LinkedIn, Wellfound, Cutshort, Naukri — set alerts","Job hunting"],
-    ["Cold outreach templates","Write 2 personalised reach-out messages","Job hunting"],
+    ["Job search strategy","Startups vs product companies — pick targets","Job hunting", true],
+    ["Questions to ask interviewers","Build a list of 10 smart questions","Interview Q&A"],
     ["Live challenge: e-commerce","Design a search experience","Mock practice"],
-    ["Challenge debrief","Structure, clarity, how you communicated","Mock practice"],
-    ["Network + community","Comment on 3 posts, reach out to 1 designer","Job hunting"],
-    ["Phase 2 wrap-up","Record + review full mock Q&A","Mock practice"],
+    ["Apply to 5 more roles","Focus on good-fit startups","Job hunting", true],
+    ["Competitor analysis","Compare 2 apps in the same space","Design skills"],
+    ["Network + community","Comment on 3 posts, reach out to 1 designer","Job hunting", true],
+    ["Whiteboard challenge","Design an onboarding flow from scratch","Design skills"],
+    ["Apply to 5 more roles","Keep pipeline warm","Job hunting", true],
+    ["July wrap-up","Record + review full mock Q&A","Mock practice"],
+    ["REST DAY","You've been at this a month — reset!","Rest"],
   ]},
-  { name: "Phase 3", theme: "Active Applying", dateRange: "Jul 30 – Aug 26", days: [
-    ["Application tracker setup","Notion/sheet — company, role, status","Job hunting"],
-    ["First batch of applications","Apply to 5 roles — tailored","Job hunting"],
-    ["Cover letter template","Write a flexible, non-generic base","Job hunting"],
-    ["Portfolio fix #1","From your Phase 2 weak-points list","Portfolio"],
+  { name: "August", theme: "Heavy Applying", dateRange: "Aug 1 – Aug 31", badge: "badge-apply", days: [
+    ["Apply to 5 roles","Morning applications — tailored","Job hunting", true],
+    ["Cover letter review","Sharpen your base template","Job hunting"],
+    ["Portfolio fix #1","Weakest case study section — fix it","Portfolio"],
     ["Live challenge: notifications","Design a notification system","Mock practice"],
-    ["Apply to 5 more roles","Track everything","Job hunting"],
-    ["REST DAY","Check tracker — any responses yet?","Rest"],
-    ["Portfolio fix #2","From your Phase 2 weak-points list","Portfolio"],
-    ["New mini case study","Start documenting a new design brief","Portfolio"],
+    ["Apply to 5 more roles","Track everything","Job hunting", true],
     ["Behavioral Q mock","Full 30-min mock interview — timed","Mock practice"],
-    ["Apply to 5 more roles","Prioritise roles that excite you","Job hunting"],
+    ["REST DAY","Check tracker — any responses yet?","Rest"],
+    ["Portfolio fix #2","Second weak-point from July list","Portfolio"],
+    ["New mini case study","Start documenting a new design brief","Portfolio"],
+    ["Apply to 5 more roles","Prioritise roles that excite you","Job hunting", true],
     ["System design for UX","Scalable design systems thinking","Design skills"],
     ["Challenge: edtech","Design a dashboard for teachers","Mock practice"],
-    ["REST DAY","Follow up on all open applications","Rest"],
-    ["Portfolio fix #3","Final item from Phase 2 list","Portfolio"],
-    ["Apply to 5 more roles","Include stretch companies","Job hunting"],
+    ["Follow-up on all open apps","Re-ping, update notes","Job hunting"],
+    ["REST DAY","Refresh and recharge","Rest"],
+    ["Portfolio fix #3","Final item from July list","Portfolio"],
+    ["Apply to 5 more roles","Include stretch companies","Job hunting", true],
     ["Handling rejection","What to say, how to follow up gracefully","Interview Q&A"],
     ["Behavioral Q: 'Future goals'","Ambitious but grounded STAR answer","Interview Q&A"],
     ["Mini case study finish","Wrap + publish the new piece","Portfolio"],
-    ["Portfolio walkthrough","Timed 15-min presentation — record it","Mock practice"],
+    ["Apply to 5 more roles","Dream companies — send it","Job hunting", true],
     ["REST DAY","Review recording — what to improve","Rest"],
-    ["Apply to 5 more roles","Focus on good-fit startups","Job hunting"],
-    ["Networking follow-ups","Check in with Phase 2 contacts","Job hunting"],
+    ["Portfolio walkthrough","Timed 15-min presentation — record it","Mock practice"],
+    ["Networking follow-ups","Check in with July contacts","Job hunting"],
     ["Challenge: health app","Design onboarding for a wellness app","Mock practice"],
     ["Salary research","Know your range for UX/UI in India","Job hunting"],
     ["Negotiation basics","Talk about compensation confidently","Interview Q&A"],
-    ["Phase 3 wrap-up","Count applications, responses, learnings","Mock practice"],
-    ["REST DAY","You've been applying a whole month — reset da!","Rest"],
-  ]},
-  { name: "Phase 4", theme: "Sharpening", dateRange: "Aug 27 – Sep 19", days: [
+    ["Apply to 5 more roles","Focus on good-fit startups","Job hunting", true],
     ["Full mock interview #1","Behavioral + portfolio — record it","Mock practice"],
-    ["Mock debrief","What landed, what didn't","Mock practice"],
+    ["REST DAY","You've been applying a whole month — reset da!","Rest"],
+    ["August wrap-up","Count applications, responses, learnings","Mock practice"],
+    ["Apply to 5 more roles","Keep pipeline full","Job hunting", true],
+  ]},
+  { name: "September", theme: "Land the Offer", dateRange: "Sep 1 – Sep 19", badge: "badge-land", days: [
+    ["Mock debrief from Aug #1","What landed, what didn't","Mock practice"],
     ["Refine weakest answers","Rewrite 3 shaky STAR answers","Interview Q&A"],
-    ["Apply to 5 more roles","Keep pipeline full","Job hunting"],
+    ["Apply to 5 roles","Keep pipeline full","Job hunting", true],
     ["Design challenge speed round","20 mins — redesign any app feature","Mock practice"],
     ["Design systems deep dive","Study Material or Atlassian design system","Design skills"],
-    ["REST DAY","Follow up on all open applications","Rest"],
+    ["Follow up on all open apps","Status check, re-ping","Job hunting"],
+    ["REST DAY","Almost there da!","Rest"],
     ["Full mock interview #2","Design challenge round — timed","Mock practice"],
-    ["Mock debrief","Was your thinking clear? Good questions asked?","Mock practice"],
-    ["Apply to 5 more roles","Include dream companies","Job hunting"],
+    ["Mock debrief","Was your thinking clear?","Mock practice"],
+    ["Apply to 5 more roles","Include dream companies","Job hunting", true],
     ["UX writing basics","Microcopy, error messages, empty states","Design skills"],
     ["Portfolio final polish","Last round of improvements","Portfolio"],
     ["Behavioral Q final run","Full bank — timed","Mock practice"],
-    ["REST DAY","Almost there da!","Rest"],
+    ["REST DAY","Trust the process","Rest"],
     ["Full mock interview #3","Behavioral + portfolio + design challenge","Mock practice"],
     ["Final debrief","What are you most nervous about? Fix it.","Mock practice"],
-    ["Apply to 5 more roles","Dream companies — go for it","Job hunting"],
+    ["Apply to 5 more roles","Dream companies — go for it","Job hunting", true],
     ["Confidence prep","Write everything you've learned since Jun","Interview Q&A"],
-    ["Final portfolio read","Fresh eyes — does it tell your story?","Portfolio"],
-    ["Interview day ritual","Night-before + morning-of prep plan","Interview Q&A"],
-    ["REST DAY","Trust the work you've put in da","Rest"],
-    ["Apply + follow up","Final push","Job hunting"],
-    ["Rapid-fire Q drill","30 questions, 60 seconds each","Mock practice"],
-    ["Design challenge sprint","3 challenges, 15 mins each","Mock practice"],
-    ["Phase 4 wrap-up","Count your wins — you've come so far 🎉","Mock practice"],
+    ["Final push + celebrate","You gave it everything 🎉","Mock practice"],
   ]},
 ];
 
@@ -322,7 +377,7 @@ const TAG_COLORS = {
   "Rest":          { bg: "rgba(75,85,99,0.2)",     color: "#9ca3af" },
 };
 
-const STORAGE_KEY = "vid_ux_prep_done";
+const STORAGE_KEY = "vid_ux_prep_done_v2";
 const APP_KEY = "vid_ux_apps";
 let done = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
 let apps = JSON.parse(localStorage.getItem(APP_KEY) || "[]");
@@ -337,7 +392,6 @@ function getCalDate(dayIndex) {
 
 function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify([...done])); }
 function saveApps() { localStorage.setItem(APP_KEY, JSON.stringify(apps)); }
-
 function toggle(id) { if (done.has(id)) done.delete(id); else done.add(id); save(); updateProgress(); render(); }
 
 function updateProgress() {
@@ -365,9 +419,10 @@ function render() {
       const gd = globalDay;
       const isDone = done.has(gd);
       const isRest = day[2] === "Rest";
+      const isApply = !!day[3];
       if (isDone) monthDone++;
       if (currentFilter === month.name || currentFilter === "all" || (currentFilter === "undone" && !isDone)) {
-        cards.push({ day, gd, isDone, isRest });
+        cards.push({ day, gd, isDone, isRest, isApply });
       }
     });
     if (cards.length === 0) return;
@@ -375,19 +430,20 @@ function render() {
     block.className = "month-block";
     block.innerHTML = `<div class="month-header">
       <span class="month-name">${month.name}</span>
-      <span class="month-theme">${month.theme}</span>
+      <span class="phase-badge ${month.badge}">${month.theme}</span>
       <span class="month-dates">${month.dateRange}</span>
       <span class="month-progress">${monthDone}/${monthTotal}</span>
-    </div><div class="days-grid" id="grid-${month.name.replace(' ','-')}"></div>`;
+    </div><div class="days-grid" id="grid-${month.name}"></div>`;
     container.appendChild(block);
-    const grid = document.getElementById("grid-" + month.name.replace(' ','-'));
-    cards.forEach(({ day, gd, isDone, isRest }) => {
+    const grid = document.getElementById("grid-" + month.name);
+    cards.forEach(({ day, gd, isDone, isRest, isApply }) => {
       const tc = TAG_COLORS[day[2]] || TAG_COLORS["Rest"];
       const c = document.createElement("div");
-      c.className = "day-card" + (isDone ? " done" : "") + (isRest ? " rest-day" : "");
+      c.className = "day-card" + (isDone ? " done" : "") + (isRest ? " rest-day" : "") + (isApply ? " apply-card" : "");
+      const applyPip = isApply ? `<span style="font-size:9px;color:#6ee7b7;margin-left:6px;letter-spacing:0.03em">▸ apply day</span>` : "";
       c.innerHTML = `<div class="checkbox">${isDone ? "✓" : ""}</div>
         <div class="day-content">
-          <div class="day-num">DAY ${gd} · ${getCalDate(gd-1)}</div>
+          <div class="day-num">DAY ${gd} · ${getCalDate(gd-1)}${applyPip}</div>
           <div class="day-topic">${day[0]}</div>
           <div class="day-sub">${day[1]}</div>
           <span class="day-tag" style="background:${tc.bg};color:${tc.color}">${day[2]}</span>
@@ -425,21 +481,12 @@ function addApp() {
   apps.push({ id: Date.now(), company, role, applied, interview, status, notes });
   saveApps();
   renderApps();
-  // clear form
   ["inp-company","inp-role","inp-applied","inp-interview","inp-notes"].forEach(id => document.getElementById(id).value = "");
   document.getElementById("inp-status").value = "applied";
 }
 
-function deleteApp(id) {
-  apps = apps.filter(a => a.id !== id);
-  saveApps();
-  renderApps();
-}
-
-function updateStatus(id, val) {
-  const app = apps.find(a => a.id === id);
-  if (app) { app.status = val; saveApps(); renderApps(); }
-}
+function deleteApp(id) { apps = apps.filter(a => a.id !== id); saveApps(); renderApps(); }
+function updateStatus(id, val) { const app = apps.find(a => a.id === id); if (app) { app.status = val; saveApps(); renderApps(); } }
 
 function renderApps() {
   const total = apps.length;
@@ -453,7 +500,7 @@ function renderApps() {
 
   const container = document.getElementById("apps-list");
   if (apps.length === 0) {
-    container.innerHTML = '<div class="empty-apps">No applications yet da — start applying! 🎯</div>';
+    container.innerHTML = '<div class="empty-apps">No applications yet da — start applying in July! 🎯</div>';
     return;
   }
   const statusLabels = { applied: "Applied", interview: "Interview Scheduled", selected: "Selected 🎉", rejected: "Rejected", ghosted: "Ghosted" };
