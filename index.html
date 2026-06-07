@@ -31,7 +31,6 @@
   .big-number span { font-size: 1.2rem; color: var(--muted); }
   .days-left { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
 
-  /* TIMELINE OVERVIEW */
   .timeline-bar { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 2rem; }
   .timeline-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
   .timeline-track { display: grid; grid-template-columns: 27fr 31fr 31fr 19fr; gap: 3px; border-radius: 8px; overflow: hidden; height: 32px; }
@@ -51,7 +50,6 @@
   .leg { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); }
   .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-  /* PHASE BADGE */
   .phase-badge { font-size: 0.65rem; padding: 2px 8px; border-radius: 100px; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; vertical-align: middle; margin-left: 6px; }
   .badge-prep   { background: rgba(232,197,71,0.15);  color: var(--accent); }
   .badge-hybrid { background: rgba(110,231,183,0.12); color: var(--apply-accent); }
@@ -75,7 +73,6 @@
   .day-card:hover { border-color: #3a3a40; transform: translateY(-1px); }
   .day-card.done { background: #141416; border-color: var(--border); opacity: 0.55; }
   .day-card.rest-day { border-style: dashed; }
-  /* applying-overlap card gets a subtle green left border */
   .day-card.apply-card { border-left: 2px solid rgba(110,231,183,0.3); }
   .checkbox { width: 20px; height: 20px; border: 1.5px solid var(--border); border-radius: 6px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 12px; color: transparent; }
   .day-card.done .checkbox { background: var(--accent); border-color: var(--accent); color: #0e0e0f; }
@@ -124,18 +121,9 @@
   /* DAY NOTES */
   .day-note-wrap { margin-top: 10px; display: none; }
   .day-card.done .day-note-wrap { display: block; }
-  .day-note-wrap textarea {
-    width: 100%; background: var(--bg); border: 1px solid var(--border);
-    color: var(--text); border-radius: 8px; padding: 8px 10px;
-    font-family: 'DM Sans', sans-serif; font-size: 11.5px; line-height: 1.5;
-    resize: vertical; min-height: 58px; outline: none; transition: border-color 0.2s;
-  }
+  .day-note-wrap textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 8px 10px; font-family: 'DM Sans', sans-serif; font-size: 11.5px; line-height: 1.5; resize: vertical; min-height: 58px; outline: none; transition: border-color 0.2s; }
   .day-note-wrap textarea:focus { border-color: var(--accent); }
-  .note-save-btn {
-    margin-top: 5px; background: none; border: 1px solid var(--border);
-    color: var(--muted); padding: 3px 12px; border-radius: 6px;
-    font-size: 10.5px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s;
-  }
+  .note-save-btn { margin-top: 5px; background: none; border: 1px solid var(--border); color: var(--muted); padding: 3px 12px; border-radius: 6px; font-size: 10.5px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
   .note-save-btn:hover { border-color: var(--accent); color: var(--accent); }
   .note-saved-flash { font-size: 10px; color: #6ee7b7; margin-left: 8px; opacity: 0; transition: opacity 0.3s; }
 
@@ -151,7 +139,6 @@
   .note-entry-tag { font-size: 10px; padding: 2px 8px; border-radius: 100px; }
   .note-entry-body { font-size: 0.85rem; color: var(--muted); line-height: 1.6; white-space: pre-wrap; }
 
-  /* NOTICE / MILESTONE CARD */
   .milestone-strip { max-width: 1100px; margin: 1.5rem auto 0; padding: 0 2rem; }
   .milestones { display: flex; gap: 10px; flex-wrap: wrap; }
   .m-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; flex: 1; min-width: 160px; }
@@ -159,10 +146,88 @@
   .m-date  { font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--text); }
   .m-note  { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
 
+  /* ── HR CONTACTS TAB ─────────────────────────────────────── */
+  .hr-section { max-width: 1200px; margin: 0 auto 4rem; padding: 2rem 2rem 0; }
+
+  .hr-topbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+  .hr-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; }
+
+  .hr-stats { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hr-stat { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 18px; text-align: center; min-width: 90px; }
+  .hr-stat-num { font-family: 'DM Mono', monospace; font-size: 1.4rem; color: var(--accent); }
+  .hr-stat-label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* filter bar */
+  .hr-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .hr-filter-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 5px 14px; border-radius: 100px; font-size: 0.78rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .hr-filter-btn:hover, .hr-filter-btn.active { border-color: var(--accent); color: var(--accent); }
+
+  /* search */
+  .hr-search-wrap { position: relative; margin-bottom: 1.25rem; }
+  .hr-search { width: 100%; max-width: 360px; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 9px 14px 9px 36px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; outline: none; transition: border-color 0.2s; }
+  .hr-search:focus { border-color: var(--accent); }
+  .hr-search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; pointer-events: none; }
+
+  /* table */
+  .hr-table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); }
+  .hr-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+  .hr-table thead tr { border-bottom: 1px solid var(--border); }
+  .hr-table th { padding: 12px 14px; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; text-align: left; white-space: nowrap; background: var(--card); }
+  .hr-table th:first-child { border-radius: 14px 0 0 0; }
+  .hr-table th:last-child  { border-radius: 0 14px 0 0; }
+  .hr-table td { padding: 11px 14px; border-bottom: 1px solid rgba(42,42,45,0.6); font-size: 0.82rem; vertical-align: middle; }
+  .hr-table tbody tr:last-child td { border-bottom: none; }
+  .hr-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* size pill */
+  .sz-large   { background: rgba(110,231,183,0.1); color: #6ee7b7; font-size: 0.65rem; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+  .sz-mid     { background: rgba(96,165,250,0.1);  color: #60a5fa; font-size: 0.65rem; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+  .sz-startup { background: rgba(232,197,71,0.1);  color: #e8c547; font-size: 0.65rem; padding: 2px 8px; border-radius: 100px; white-space: nowrap; }
+
+  /* editable cells */
+  .editable-input {
+    background: transparent; border: 1px solid transparent; color: var(--text);
+    padding: 5px 8px; border-radius: 7px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; outline: none; width: 100%; min-width: 120px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .editable-input:hover { border-color: var(--border); background: var(--bg); }
+  .editable-input:focus { border-color: var(--accent); background: var(--bg); }
+  .editable-input::placeholder { color: var(--muted); font-style: italic; font-size: 0.78rem; }
+
+  /* sent checkbox */
+  .sent-wrap { display: flex; align-items: center; justify-content: center; }
+  .sent-cb { width: 20px; height: 20px; border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; font-size: 12px; color: transparent; background: var(--bg); }
+  .sent-cb.checked { background: #6ee7b7; border-color: #6ee7b7; color: #0e0e0f; }
+
+  /* priority dot */
+  .p-high   { color: #f472b6; font-size: 0.72rem; font-family: 'DM Mono', monospace; }
+  .p-medium { color: #a78bfa; font-size: 0.72rem; font-family: 'DM Mono', monospace; }
+  .p-good   { color: var(--muted); font-size: 0.72rem; font-family: 'DM Mono', monospace; }
+
+  .co-name { font-weight: 500; color: var(--text); }
+  .co-industry { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+  .co-loc { font-size: 0.72rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  /* save indicator */
+  .hr-save-toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--card); border: 1px solid #6ee7b7; color: #6ee7b7; padding: 10px 20px; border-radius: 10px; font-size: 0.82rem; font-family: 'DM Mono', monospace; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 100; }
+  .hr-save-toast.show { opacity: 1; }
+
+  /* export btn */
+  .export-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 7px 16px; border-radius: 8px; font-size: 0.78rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+  .export-btn:hover { border-color: var(--accent); color: var(--accent); }
+
   footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border); letter-spacing: 0.05em; }
   footer strong { color: var(--accent); font-weight: 500; }
   ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  @media (max-width: 600px) { header, .progress-section, .legend, .filters, main, .app-section, .timeline-bar, .milestone-strip { padding-left: 1.25rem; padding-right: 1.25rem; } .days-grid { grid-template-columns: 1fr; } .form-grid { grid-template-columns: 1fr; } .apps-table { font-size: 0.78rem; } .timeline-track { height: 26px; } .t-seg { font-size: 0.6rem; } }
+  @media (max-width: 600px) {
+    header, .progress-section, .legend, .filters, main, .app-section, .timeline-bar, .milestone-strip, .hr-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .days-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .apps-table { font-size: 0.78rem; }
+    .timeline-track { height: 26px; }
+    .t-seg { font-size: 0.6rem; }
+  }
 </style>
 </head>
 <body>
@@ -178,7 +243,6 @@
   </div>
 </header>
 
-<!-- TIMELINE VISUAL -->
 <div class="timeline-bar">
   <div class="timeline-label">Your roadmap at a glance</div>
   <div class="timeline-track">
@@ -192,7 +256,6 @@
   </div>
 </div>
 
-<!-- MILESTONES -->
 <div class="milestone-strip">
   <div class="milestones">
     <div class="m-card"><div class="m-label">Resign / Paper</div><div class="m-date">~Jul 2026</div><div class="m-note">Start notice period</div></div>
@@ -223,6 +286,7 @@
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('prep', this)">Prep Plan</button>
   <button class="tab-btn" onclick="switchTab('apps', this)">Applications</button>
+  <button class="tab-btn" onclick="switchTab('hr', this)">HR Contacts</button>
   <button class="tab-btn" onclick="switchTab('notes', this)">My Notes</button>
 </div>
 
@@ -251,7 +315,6 @@
         <div class="app-stat"><div class="app-stat-num" id="stat-rejected">0</div><div class="app-stat-label">Rejected</div></div>
       </div>
     </div>
-
     <div class="add-app-form">
       <div class="form-grid">
         <div class="form-group"><label>Company</label><input type="text" id="inp-company" placeholder="e.g. Swiggy"></div>
@@ -271,8 +334,63 @@
       </div>
       <button class="add-btn" onclick="addApp()">+ Add Application</button>
     </div>
-
     <div id="apps-list"></div>
+  </div>
+</div>
+
+<!-- HR CONTACTS TAB -->
+<div id="tab-hr" class="tab-content">
+  <div class="hr-section">
+    <div class="hr-topbar">
+      <div class="hr-title">HR Contacts</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div class="hr-stats">
+          <div class="hr-stat"><div class="hr-stat-num" id="hr-stat-total">100</div><div class="hr-stat-label">Companies</div></div>
+          <div class="hr-stat"><div class="hr-stat-num" id="hr-stat-found">0</div><div class="hr-stat-label">HR Found</div></div>
+          <div class="hr-stat"><div class="hr-stat-num" id="hr-stat-sent">0</div><div class="hr-stat-label">Emails Sent</div></div>
+          <div class="hr-stat"><div class="hr-stat-num" id="hr-stat-pct">0%</div><div class="hr-stat-label">Coverage</div></div>
+        </div>
+        <button class="export-btn" onclick="exportHRCSV()">⬇ Export CSV</button>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:1rem">
+      <div class="hr-search-wrap" style="margin-bottom:0">
+        <span class="hr-search-icon">⌕</span>
+        <input class="hr-search" type="text" id="hr-search" placeholder="Search company or HR name…" oninput="renderHR()">
+      </div>
+      <div class="hr-filters">
+        <button class="hr-filter-btn active" onclick="hrFilter('all',this)">All</button>
+        <button class="hr-filter-btn" onclick="hrFilter('large',this)">🟢 Large</button>
+        <button class="hr-filter-btn" onclick="hrFilter('mid',this)">🔵 Mid</button>
+        <button class="hr-filter-btn" onclick="hrFilter('startup',this)">🟡 Startup</button>
+        <button class="hr-filter-btn" onclick="hrFilter('found',this)">HR Found</button>
+        <button class="hr-filter-btn" onclick="hrFilter('sent',this)">✓ Sent</button>
+        <button class="hr-filter-btn" onclick="hrFilter('pending',this)">⏳ Not Sent</button>
+      </div>
+    </div>
+
+    <div class="hr-table-wrap">
+      <table class="hr-table">
+        <thead>
+          <tr>
+            <th style="width:36px">#</th>
+            <th>Company</th>
+            <th>Size</th>
+            <th>Location</th>
+            <th style="min-width:160px">HR Name</th>
+            <th style="min-width:200px">Email</th>
+            <th style="min-width:140px">LinkedIn Profile</th>
+            <th style="min-width:120px">Notes</th>
+            <th style="width:80px;text-align:center">Email Sent</th>
+          </tr>
+        </thead>
+        <tbody id="hr-tbody"></tbody>
+      </table>
+    </div>
+    <div style="font-size:0.72rem;color:var(--muted);margin-top:12px;padding-left:2px">
+      ✏️ Click any field to edit · Changes auto-save to your browser · Use Export CSV to back up
+    </div>
   </div>
 </div>
 
@@ -285,10 +403,12 @@
   </div>
 </div>
 
+<div class="hr-save-toast" id="hr-toast">✓ saved</div>
+
 <footer>Built for <strong>Vid</strong> · From Systems to Stories · Land by September 2026 🎯</footer>
 
 <script>
-// isApply flag = true means this day also includes a "apply X roles" push in parallel
+// ── PREP PLAN DATA ────────────────────────────────────────────────────────────
 const MONTHS = [
   { name: "June", theme: "Core Prep", dateRange: "Jun 4 – Jun 30", badge: "badge-prep", days: [
     ["Your origin story","Draft 'Tell me about yourself'","Interview Q&A"],
@@ -418,27 +538,260 @@ const TAG_COLORS = {
 };
 
 const STORAGE_KEY = "vid_ux_prep_done_v2";
-const APP_KEY = "vid_ux_apps";
-const NOTES_KEY = "vid_ux_day_notes";
-let done = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
-let apps = JSON.parse(localStorage.getItem(APP_KEY) || "[]");
+const APP_KEY     = "vid_ux_apps";
+const NOTES_KEY   = "vid_ux_day_notes";
+const HR_KEY      = "vid_ux_hr_contacts";
+
+let done     = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+let apps     = JSON.parse(localStorage.getItem(APP_KEY)   || "[]");
 let dayNotes = JSON.parse(localStorage.getItem(NOTES_KEY) || "{}");
-let currentFilter = "all";
+let hrData   = JSON.parse(localStorage.getItem(HR_KEY)    || "{}");
+
+let currentFilter   = "all";
+let currentHrFilter = "all";
 const total = MONTHS.reduce((a, m) => a + m.days.length, 0);
 
+// ── HR COMPANIES MASTER LIST ──────────────────────────────────────────────────
+const HR_COMPANIES = [
+  ["Zoho Corporation","large","Chennai HQ","SaaS / Productivity"],
+  ["Freshworks","large","Chennai HQ","SaaS / CRM / ITSM"],
+  ["Infosys BPM","large","Chennai","IT Services / BPM"],
+  ["Cognizant","large","Chennai HQ","IT Services / Consulting"],
+  ["TCS (Tata Consultancy Services)","large","Chennai","IT Services"],
+  ["Wipro","large","Chennai","IT Services / Design"],
+  ["HCLTech","large","Chennai","IT Services / Products"],
+  ["Hexaware Technologies","large","Chennai HQ","IT Services / AI"],
+  ["Mphasis","large","Chennai","Fintech / IT Services"],
+  ["Sutherland Global Services","large","Chennai HQ","BPM / Digital CX"],
+  ["Standard Chartered GBS","large","Chennai HQ","Banking / Fintech"],
+  ["Brakes India","large","Chennai HQ","Manufacturing / Automotive"],
+  ["Ford India (Ford GTSC)","large","Chennai HQ","Automotive Tech / Digital"],
+  ["Ramco Systems","large","Chennai HQ","ERP / Aviation SaaS"],
+  ["Athenahealth","large","Chennai HQ","Healthtech SaaS"],
+  ["Optum (UHG)","large","Chennai HQ","Healthtech / AI"],
+  ["Hitachi Energy","large","Chennai HQ","Energy / Industrial Tech"],
+  ["Qube Cinema","large","Chennai HQ","Media Tech / B2B SaaS"],
+  ["Redington Limited","large","Chennai HQ","Tech Distribution / IT"],
+  ["Murugappa Group","large","Chennai HQ","Conglomerate / Digital"],
+  ["TVS Next","large","Chennai HQ","Automotive / IT Consulting"],
+  ["Sonata Software","large","Chennai","IT Services / Products"],
+  ["3Pillar Global","large","Chennai (Remote)","Software / Product Engineering"],
+  ["Accenture Song","large","Chennai","Design Consulting / Digital"],
+  ["Groww","large","Bengaluru + Remote","Fintech / Investment App"],
+  ["Zomato","large","Delhi + Remote","FoodTech / Super App"],
+  ["Swiggy","large","Bengaluru + Remote","FoodTech / Quick Commerce"],
+  ["CRED","large","Bengaluru + Remote","Fintech / Rewards App"],
+  ["PhonePe","large","Bengaluru + Remote","Fintech / Payments"],
+  ["Razorpay","large","Bengaluru + Remote","Fintech / Payments SaaS"],
+  ["OLA Electric","large","Chennai + Bengaluru","EV / Consumer Tech"],
+  ["Paperflite","mid","Chennai HQ","Content SaaS"],
+  ["Chargebee","mid","Chennai HQ","Subscription Billing SaaS"],
+  ["Kissflow","mid","Chennai HQ","No-Code / Workflow SaaS"],
+  ["Exotel","mid","Chennai","CPaaS / Telecom SaaS"],
+  ["Uniphore","mid","Chennai HQ","AI / Conversational AI"],
+  ["Planful","mid","Chennai + Remote","Fintech / Financial Planning SaaS"],
+  ["INRY","mid","Chennai HQ","ServiceNow Consulting"],
+  ["Uplers","mid","Chennai HQ","Remote Staffing / Design"],
+  ["Druva","mid","Chennai + Pune","Cloud Data Protection SaaS"],
+  ["Ather Energy","mid","Chennai","EV / IoT / Consumer Tech"],
+  ["Intellect Design Arena","mid","Chennai HQ","Fintech / Banking SaaS"],
+  ["Aspire Systems","mid","Chennai HQ","IT Services / Product Engineering"],
+  ["Societe Generale GBS","mid","Chennai HQ","Banking / Fintech"],
+  ["DBS Bank Technology","mid","Chennai HQ","Banking / Fintech"],
+  ["Graymatter Software","mid","Chennai HQ","Analytics / BI SaaS"],
+  ["Indium Software","mid","Chennai HQ","IT Services / Testing / AI"],
+  ["Azentio Software","mid","Chennai HQ","Fintech / BFSI SaaS"],
+  ["Kovai.co","mid","Chennai HQ","B2B SaaS / Azure Tools"],
+  ["Techfully","mid","Chennai HQ","Product / IT"],
+  ["LeadSquared","mid","Chennai","CRM / Sales Automation SaaS"],
+  ["Happay","mid","Chennai","Expense Management SaaS"],
+  ["Simplilearn","mid","Chennai","Ed-Tech / Online Learning"],
+  ["Juspay","mid","Chennai","Payments Infrastructure SaaS"],
+  ["Perfios","mid","Chennai","Fintech Data / Banking AI"],
+  ["Keka HR","mid","Hyderabad + Remote","HR Tech SaaS"],
+  ["Navi Technologies","mid","Bengaluru + Remote","Fintech / Insurance / Loans"],
+  ["MoEngage","mid","Bengaluru + Remote","Marketing Automation SaaS"],
+  ["CleverTap","mid","Mumbai + Remote","Customer Analytics SaaS"],
+  ["Haptik (JioHaptik)","mid","Mumbai + Remote","Conversational AI / Chatbot SaaS"],
+  ["Boomi","mid","Chennai + Remote","Integration Platform SaaS"],
+  ["Acuvate Software","mid","Chennai + Remote","AI / Enterprise SaaS"],
+  ["Wingify (VWO)","mid","Delhi + Remote","A/B Testing / CRO SaaS"],
+  ["Emerald Publishers / KnowledgeWorks","mid","Chennai HQ","Ed-Tech / Publishing"],
+  ["Payoda Technologies","mid","Coimbatore + Chennai","IT Services / SaaS"],
+  ["VELZI.AI LIMITED","startup","Chennai HQ","AI / Fintech SaaS"],
+  ["ProCreator Solutions","startup","Chennai HQ","Design Agency / AI"],
+  ["YourTribe","startup","Chennai HQ","Social / Community Platform"],
+  ["Muvi","startup","Chennai HQ","Video Streaming SaaS"],
+  ["Zuper Inc.","startup","Chennai HQ","Field Service SaaS"],
+  ["Servify","startup","Chennai + Mumbai","After-Sales Tech SaaS"],
+  ["GreatLearning","startup","Chennai HQ","Ed-Tech / Online Learning"],
+  ["Zluri","startup","Chennai HQ","SaaS Management Platform"],
+  ["Facilio","startup","Chennai HQ","PropTech / Building Ops SaaS"],
+  ["SurveySparrow","startup","Chennai HQ","Survey / CX SaaS"],
+  ["LambdaTest","startup","Chennai + Remote","Dev Tools / Testing SaaS"],
+  ["Tooljet","startup","Chennai HQ","Low-Code / Dev Tools SaaS"],
+  ["Agara Labs","startup","Chennai HQ","Conversational AI / CX SaaS"],
+  ["Darwinbox","startup","Hyderabad + Chennai","HR Tech SaaS"],
+  ["iMocha","startup","Chennai + Pune","HR Tech / Skills SaaS"],
+  ["Skuad","startup","Chennai + Remote","HR Tech / Global Payroll SaaS"],
+  ["Arya.ai","startup","Chennai + Remote","AI / Financial AI SaaS"],
+  ["Decentro","startup","Chennai + Remote","Fintech API / BaaS"],
+  ["Spenmo","startup","Chennai + Remote","Fintech / B2B Payments"],
+  ["Amber Student","startup","Chennai + Remote","Student Housing Tech"],
+  ["Plobal Apps","startup","Chennai + Remote","Mobile Commerce SaaS"],
+  ["Pratilipi","startup","Bengaluru + Remote","Regional Language Content Tech"],
+  ["Slintel (6sense)","startup","Chennai + Remote","Sales Intelligence SaaS"],
+  ["Tyke","startup","Chennai + Remote","Fintech / Investment SaaS"],
+  ["GrowthJockey","startup","Chennai + Remote","Growth Agency / Martech"],
+  ["Nymble Labs","startup","Bengaluru + Remote","Robotics / FoodTech"],
+  ["Recko (Stripe Recko)","startup","Bengaluru + Remote","Fintech / Revenue Ops SaaS"],
+  ["Aviyel","startup","Chennai + Remote","Developer Community SaaS"],
+  ["Bounce (Vogo)","startup","Bengaluru + Chennai","Mobility / EV Tech"],
+  ["Licious","mid","Bengaluru + Chennai","D2C / FoodTech"],
+  ["Piramal Finance","mid","Chennai + Mumbai","Fintech / NBFC"],
+  ["Blox.xyz / CoinDCX","startup","Chennai + Remote","Crypto / Web3 / Fintech"],
+  ["Springml","mid","Chennai + Remote","AI / Data Analytics"],
+  ["Irisys","mid","Chennai + Remote","IoT / People Counting Tech"],
+  ["Netsol Technologies","mid","Chennai + Remote","Fintech / Leasing SaaS"],
+  ["Udaan","mid","Bengaluru + Remote","B2B E-Commerce SaaS"],
+];
+
+function saveHR() {
+  localStorage.setItem(HR_KEY, JSON.stringify(hrData));
+  showToast();
+  updateHRStats();
+}
+
+let toastTimer;
+function showToast() {
+  const t = document.getElementById("hr-toast");
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+function updateHRStats() {
+  const found = HR_COMPANIES.filter(c => {
+    const d = hrData[c[0]] || {};
+    return (d.name && d.name.trim()) || (d.email && d.email.trim());
+  }).length;
+  const sent = HR_COMPANIES.filter(c => (hrData[c[0]] || {}).sent).length;
+  document.getElementById("hr-stat-total").textContent   = HR_COMPANIES.length;
+  document.getElementById("hr-stat-found").textContent   = found;
+  document.getElementById("hr-stat-sent").textContent    = sent;
+  document.getElementById("hr-stat-pct").textContent     = Math.round((sent / HR_COMPANIES.length) * 100) + "%";
+}
+
+let currentHrFilterVal = "all";
+function hrFilter(val, btn) {
+  currentHrFilterVal = val;
+  document.querySelectorAll(".hr-filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  renderHR();
+}
+
+function renderHR() {
+  const q = (document.getElementById("hr-search").value || "").toLowerCase();
+  const tbody = document.getElementById("hr-tbody");
+  tbody.innerHTML = "";
+
+  const filtered = HR_COMPANIES.filter((c, i) => {
+    const d = hrData[c[0]] || {};
+    const hasHR = (d.name && d.name.trim()) || (d.email && d.email.trim());
+    const isSent = !!d.sent;
+    if (currentHrFilterVal === "large"   && c[1] !== "large")   return false;
+    if (currentHrFilterVal === "mid"     && c[1] !== "mid")     return false;
+    if (currentHrFilterVal === "startup" && c[1] !== "startup") return false;
+    if (currentHrFilterVal === "found"   && !hasHR)             return false;
+    if (currentHrFilterVal === "sent"    && !isSent)            return false;
+    if (currentHrFilterVal === "pending" && isSent)             return false;
+    if (q && !c[0].toLowerCase().includes(q) && !(d.name||"").toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:3rem;color:var(--muted);font-size:0.85rem">No companies match this filter da 🔍</td></tr>`;
+    return;
+  }
+
+  filtered.forEach((c, fi) => {
+    const name = c[0], size = c[1], loc = c[2], industry = c[3];
+    const globalIdx = HR_COMPANIES.indexOf(c);
+    const d = hrData[name] || {};
+    const isSent = !!d.sent;
+
+    const szClass = size === "large" ? "sz-large" : size === "mid" ? "sz-mid" : "sz-startup";
+    const szLabel = size === "large" ? "🟢 Large" : size === "mid" ? "🔵 Mid" : "🟡 Startup";
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.72rem;text-align:center">${globalIdx + 1}</td>
+      <td>
+        <div class="co-name">${name}</div>
+        <div class="co-industry">${industry}</div>
+      </td>
+      <td><span class="${szClass}">${szLabel}</span></td>
+      <td class="co-loc">${loc}</td>
+      <td><input class="editable-input" data-co="${name}" data-field="name" value="${(d.name||'').replace(/"/g,'&quot;')}" placeholder="Add HR name…"></td>
+      <td><input class="editable-input" data-co="${name}" data-field="email" value="${(d.email||'').replace(/"/g,'&quot;')}" placeholder="hr@company.com" type="email"></td>
+      <td><input class="editable-input" data-co="${name}" data-field="linkedin" value="${(d.linkedin||'').replace(/"/g,'&quot;')}" placeholder="linkedin.com/in/…"></td>
+      <td><input class="editable-input" data-co="${name}" data-field="notes" value="${(d.notes||'').replace(/"/g,'&quot;')}" placeholder="referral, cold…"></td>
+      <td>
+        <div class="sent-wrap">
+          <div class="sent-cb ${isSent ? 'checked' : ''}" data-co="${name}" onclick="toggleSent('${name.replace(/'/g,"\\'")}', this)">${isSent ? '✓' : ''}</div>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // attach input listeners
+  tbody.querySelectorAll(".editable-input").forEach(inp => {
+    inp.addEventListener("change", () => {
+      const co = inp.dataset.co, field = inp.dataset.field;
+      if (!hrData[co]) hrData[co] = {};
+      hrData[co][field] = inp.value;
+      saveHR();
+    });
+  });
+}
+
+function toggleSent(coName, el) {
+  if (!hrData[coName]) hrData[coName] = {};
+  hrData[coName].sent = !hrData[coName].sent;
+  el.classList.toggle("checked", hrData[coName].sent);
+  el.textContent = hrData[coName].sent ? "✓" : "";
+  saveHR();
+}
+
+function exportHRCSV() {
+  const rows = [["#","Company","Size","Location","Industry","HR Name","Email","LinkedIn","Notes","Email Sent"]];
+  HR_COMPANIES.forEach((c, i) => {
+    const d = hrData[c[0]] || {};
+    rows.push([
+      i+1, c[0], c[1], c[2], c[3],
+      d.name||"", d.email||"", d.linkedin||"", d.notes||"",
+      d.sent ? "Yes" : "No"
+    ]);
+  });
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "vidhya_hr_contacts.csv"; a.click();
+}
+
+// ── PREP PLAN ─────────────────────────────────────────────────────────────────
 function getCalDate(dayIndex) {
   const start = new Date('2026-06-04');
   start.setDate(start.getDate() + dayIndex);
   return start.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
 }
-
-function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify([...done])); }
-function saveApps() { localStorage.setItem(APP_KEY, JSON.stringify(apps)); }
+function save()      { localStorage.setItem(STORAGE_KEY, JSON.stringify([...done])); }
+function saveApps()  { localStorage.setItem(APP_KEY, JSON.stringify(apps)); }
 function saveNotes() { localStorage.setItem(NOTES_KEY, JSON.stringify(dayNotes)); }
 
 function toggle(id) {
-  if (done.has(id)) done.delete(id);
-  else done.add(id);
+  if (done.has(id)) done.delete(id); else done.add(id);
   save(); updateProgress(); render();
 }
 
@@ -512,11 +865,7 @@ function render() {
             </div>
           </div>
         </div>`;
-      // clicking the card toggles done — but clicking inside textarea or button shouldn't
-      c.onclick = (e) => {
-        if (e.target.tagName === "TEXTAREA" || e.target.tagName === "BUTTON") return;
-        toggle(gd);
-      };
+      c.onclick = (e) => { if (e.target.tagName === "TEXTAREA" || e.target.tagName === "BUTTON") return; toggle(gd); };
       grid.appendChild(c);
     });
   });
@@ -524,21 +873,10 @@ function render() {
 
 function renderNotesLog() {
   const container = document.getElementById("notes-log-list");
-  // build a flat list of all days that have notes
   const entries = [];
   let gd = 0;
-  MONTHS.forEach(month => {
-    month.days.forEach(day => {
-      gd++;
-      if (dayNotes[gd] && dayNotes[gd].trim()) {
-        entries.push({ gd, day, month: month.name });
-      }
-    });
-  });
-  if (entries.length === 0) {
-    container.innerHTML = '<div class="notes-empty">No notes yet da — complete a day and write what you learned 📝</div>';
-    return;
-  }
+  MONTHS.forEach(month => { month.days.forEach(day => { gd++; if (dayNotes[gd] && dayNotes[gd].trim()) entries.push({ gd, day, month: month.name }); }); });
+  if (entries.length === 0) { container.innerHTML = '<div class="notes-empty">No notes yet da — complete a day and write what you learned 📝</div>'; return; }
   const tc = (tag) => TAG_COLORS[tag] || TAG_COLORS["Rest"];
   container.innerHTML = entries.map(({ gd, day, month }) => `
     <div class="note-entry">
@@ -563,71 +901,61 @@ function switchTab(tab, btn) {
   document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
   btn.classList.add("active");
   document.getElementById("tab-" + tab).classList.add("active");
-  if (tab === "apps") renderApps();
+  if (tab === "apps")  renderApps();
   if (tab === "notes") renderNotesLog();
+  if (tab === "hr")    { renderHR(); updateHRStats(); }
 }
 
-// APPLICATION TRACKER
+// ── APPLICATIONS ──────────────────────────────────────────────────────────────
 function addApp() {
-  const company = document.getElementById("inp-company").value.trim();
-  const role = document.getElementById("inp-role").value.trim();
-  const applied = document.getElementById("inp-applied").value;
+  const company   = document.getElementById("inp-company").value.trim();
+  const role      = document.getElementById("inp-role").value.trim();
+  const applied   = document.getElementById("inp-applied").value;
   const interview = document.getElementById("inp-interview").value;
-  const status = document.getElementById("inp-status").value;
-  const notes = document.getElementById("inp-notes").value.trim();
+  const status    = document.getElementById("inp-status").value;
+  const notes     = document.getElementById("inp-notes").value.trim();
   if (!company || !role) { alert("Company and Role are required da!"); return; }
   apps.push({ id: Date.now(), company, role, applied, interview, status, notes });
-  saveApps();
-  renderApps();
+  saveApps(); renderApps();
   ["inp-company","inp-role","inp-applied","inp-interview","inp-notes"].forEach(id => document.getElementById(id).value = "");
   document.getElementById("inp-status").value = "applied";
 }
-
 function deleteApp(id) { apps = apps.filter(a => a.id !== id); saveApps(); renderApps(); }
 function updateStatus(id, val) { const app = apps.find(a => a.id === id); if (app) { app.status = val; saveApps(); renderApps(); } }
 
 function renderApps() {
   const total = apps.length;
   const interviews = apps.filter(a => a.status === "interview").length;
-  const selected = apps.filter(a => a.status === "selected").length;
-  const rejected = apps.filter(a => a.status === "rejected").length;
-  document.getElementById("stat-total").textContent = total;
+  const selected   = apps.filter(a => a.status === "selected").length;
+  const rejected   = apps.filter(a => a.status === "rejected").length;
+  document.getElementById("stat-total").textContent     = total;
   document.getElementById("stat-interview").textContent = interviews;
-  document.getElementById("stat-selected").textContent = selected;
-  document.getElementById("stat-rejected").textContent = rejected;
-
+  document.getElementById("stat-selected").textContent  = selected;
+  document.getElementById("stat-rejected").textContent  = rejected;
   const container = document.getElementById("apps-list");
-  if (apps.length === 0) {
-    container.innerHTML = '<div class="empty-apps">No applications yet da — start applying in July! 🎯</div>';
-    return;
-  }
+  if (apps.length === 0) { container.innerHTML = '<div class="empty-apps">No applications yet da — start applying in July! 🎯</div>'; return; }
   const statusLabels = { applied: "Applied", interview: "Interview Scheduled", selected: "Selected 🎉", rejected: "Rejected", ghosted: "Ghosted" };
   container.innerHTML = `<table class="apps-table">
-    <thead><tr>
-      <th>#</th><th>Company</th><th>Role</th><th>Applied</th><th>Interview</th><th>Status</th><th>Notes</th><th></th>
-    </tr></thead>
-    <tbody>
-      ${apps.map((a, i) => `<tr>
-        <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.78rem">${i+1}</td>
-        <td style="font-weight:500">${a.company}</td>
-        <td style="color:var(--muted)">${a.role}</td>
-        <td style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted)">${a.applied || "—"}</td>
-        <td style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted)">${a.interview || "—"}</td>
-        <td>
-          <select onchange="updateStatus(${a.id}, this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:6px;font-size:0.78rem;font-family:'DM Sans',sans-serif;cursor:pointer">
-            ${Object.entries(statusLabels).map(([v,l]) => `<option value="${v}" ${a.status===v?"selected":""}>${l}</option>`).join("")}
-          </select>
-        </td>
-        <td class="notes-cell" title="${a.notes}">${a.notes || "—"}</td>
-        <td><button class="delete-btn" onclick="deleteApp(${a.id})">✕</button></td>
-      </tr>`).join("")}
-    </tbody>
-  </table>`;
+    <thead><tr><th>#</th><th>Company</th><th>Role</th><th>Applied</th><th>Interview</th><th>Status</th><th>Notes</th><th></th></tr></thead>
+    <tbody>${apps.map((a, i) => `<tr>
+      <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:0.78rem">${i+1}</td>
+      <td style="font-weight:500">${a.company}</td>
+      <td style="color:var(--muted)">${a.role}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted)">${a.applied || "—"}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--muted)">${a.interview || "—"}</td>
+      <td><select onchange="updateStatus(${a.id}, this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:6px;font-size:0.78rem;font-family:'DM Sans',sans-serif;cursor:pointer">
+        ${Object.entries(statusLabels).map(([v,l]) => `<option value="${v}" ${a.status===v?"selected":""}>${l}</option>`).join("")}
+      </select></td>
+      <td class="notes-cell" title="${a.notes}">${a.notes || "—"}</td>
+      <td><button class="delete-btn" onclick="deleteApp(${a.id})">✕</button></td>
+    </tr>`).join("")}</tbody></table>`;
 }
 
+// ── INIT ──────────────────────────────────────────────────────────────────────
 render();
 updateProgress();
 renderApps();
+updateHRStats();
 </script>
 </body>
 </html>
